@@ -1,0 +1,58 @@
+<h1>Search for available flights</h1>
+
+<%= form_with url: root_path, method: :get do |form| %>
+  <%= form.label :departure_airport_id, "Departure Airport:" %>
+  <%= form.select :departure_airport_id,
+              @airports,
+              selected: params[:departure_airport_id] %>
+  <br>
+
+  <%= form.label :arrival_airport_id, "Arrival Airport:" %>
+  <%= form.select :arrival_airport_id,
+              @airports,
+              selected: params[:arrival_airport_id] %>
+  <br>
+
+  <%= form.label :passengers, "Passengers:" %>
+  <%= form.select :passengers, 1..4, selected: params[:passengers] %>
+  <br>
+
+  <%= form.label :date, "Date:" %>
+  <%= form.date_select :date,
+                   start_year: @start_year,
+                   end_year: @end_year,
+                   include_blank: true,
+                   selected: {
+                     year: params["[date(1i)]"].to_i,
+                     month: params["[date(2i)]"].to_i,
+                     day: params["[date(3i)]"].to_i,
+                   } %>
+  <br><br>
+
+  <%= form.submit "Search" %>
+<% end %>
+
+<br>
+
+<% if @flights.present? %>
+  <%= form_with url: "/bookings/new", method: :get do |form| %>
+    <%= form.hidden_field :passengers, value: params[:passengers] %>
+
+    <% @flights.each_with_index do |flight, index| %>
+      <%= form.radio_button :flight_id, flight.id, id: flight.id, checked: (index == 0) %>
+
+      <div>
+        <%= form.label flight.id do %>
+          <%= "Departure Airport: #{flight.departure_airport.code}" %><br>
+          <%= "Arrival Airport: #{flight.arrival_airport.code}" %><br>
+          <%= "Start: #{flight.start.strftime("%m/%d/%Y %I:%M %p")}" %><br>
+          <%= "Duration: #{flight.duration / 60} hrs" %>
+        <% end %>
+      </div>
+
+      <br>
+    <% end %>
+
+    <%= form.submit "Proceed" %>
+  <% end %>
+<% end %>
