@@ -13,8 +13,8 @@
               selected: params[:arrival_airport_id] %>
   <br>
 
-  <%= form.label :passengers, "Passengers:" %>
-  <%= form.select :passengers, 1..4, selected: params[:passengers] %>
+  <%= form.label :number_of_passengers, "Passengers:" %>
+  <%= form.select :number_of_passengers, 1..4, selected: params[:number_of_passengers] %>
   <br>
 
   <%= form.label :date, "Date:" %>
@@ -36,7 +36,7 @@
 
 <% if @flights.present? %>
   <%= form_with url: "/bookings/new", method: :get do |form| %>
-    <%= form.hidden_field :passengers, value: params[:passengers] %>
+    <%= form.hidden_field :number_of_passengers, value: params[:number_of_passengers] %>
 
     <% @flights.each_with_index do |flight, index| %>
       <%= form.radio_button :flight_id, flight.id, id: flight.id, checked: (index == 0) %>

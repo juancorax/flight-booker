@@ -1,0 +1,22 @@
+<h1>Booking Information</h1>
+
+<h2>Flight</h2>
+
+<%= "Departure Airport: #{@flight.departure_airport.code}" %><br>
+<%= "Arrival Airport: #{@flight.arrival_airport.code}" %><br>
+<%= "Start: #{@flight.start.strftime("%m/%d/%Y %I:%M %p")}" %><br>
+<%= "Duration: #{@flight.duration / 60} hrs" %>
+
+<br>
+
+<h2>Passengers</h2>
+
+<ul>
+  <% @booking.passengers.each do |passenger| %>
+    <li>
+      <%= "Name: #{passenger.name}" %><br>
+      <%= "Email: #{passenger.email}" %>
+    </li>
+    <br>
+  <% end %>
+</ul>
