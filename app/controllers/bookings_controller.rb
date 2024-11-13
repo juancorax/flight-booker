@@ -18,6 +18,7 @@ class BookingsController < ApplicationController
 
   def create
     @booking = Booking.new(booking_params)
+    @flight = @booking.flight
 
     if @booking.save
       redirect_to @booking, notice: "Booking created"
