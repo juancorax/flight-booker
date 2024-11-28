@@ -11,35 +11,26 @@
 
 <p>Please, enter the personal information for each passenger:</p>
 
-<%= form_with model: @booking do |form| %>
+<%= form_with model: @booking, data: { controller: "passenger-fields" } do |form| %>
   <%= form.hidden_field :flight_id, value: @flight.id %>
 
-  <ul>
+  <ul data-passenger-fields-target="list">
     <%= form.fields_for :passengers do |sub_form| %>
-      <li>
-        <%= sub_form.label :name, "Name:" %>
-        <%= sub_form.text_field :name %>
-
-        <% if sub_form.object.errors[:name].any? %>
-          <% sub_form.object.errors[:name].each do |error_message| %>
-            <%= error_message %><br>
-          <% end %>
-        <% end %>
-
-        <br>
-
-        <%= sub_form.label :email, "Email:" %>
-        <%= sub_form.email_field :email %>
-
-        <% if sub_form.object.errors[:email].any? %>
-          <% sub_form.object.errors[:email].each do |error_message| %>
-            <%= error_message %><br>
-          <% end %>
-        <% end %>
-      </li>
-      <br>
+      <%= render "shared/passenger_fields", form: sub_form %>
     <% end %>
   </ul>
+
+  <div data-passenger-fields-target="addButton">
+    <%= button_tag "Add Passenger", data: { action: "passenger-fields#addPassenger" } %>
+
+    <br><br>
+  </div>
+
+  <%= tag.template data: { passenger_fields_target: "template" } do %>
+    <%= form.fields_for :passengers, @booking.passengers.build do |sub_form| %>
+      <%= render "shared/passenger_fields", form: sub_form %>
+    <% end %>
+  <% end %>
 
   <%= form.submit "Create Booking" %>
 <% end %>

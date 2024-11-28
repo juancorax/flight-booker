@@ -1,0 +1,29 @@
+<li>
+  <%= form.label :name, "Name:" %>
+  <%= form.text_field :name %>
+
+  <% if form.object.errors[:name].any? %>
+    <% form.object.errors[:name].each do |error_message| %>
+      <%= error_message %><br>
+    <% end %>
+  <% end %>
+
+  <br>
+
+  <%= form.label :email, "Email:" %>
+  <%= form.email_field :email %>
+
+  <% if form.object.errors[:email].any? %>
+    <% form.object.errors[:email].each do |error_message| %>
+      <%= error_message %><br>
+    <% end %>
+  <% end %>
+
+  <br><br>
+
+  <div data-passenger-fields-target="removeButton">
+    <%= button_tag "Remove", data: { action: "passenger-fields#removePassenger" } %>
+
+    <br><br>
+  </div>
+</li>
