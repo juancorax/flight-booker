@@ -21,6 +21,10 @@ class BookingsController < ApplicationController
     @flight = @booking.flight
 
     if @booking.save
+      @booking.passengers.each do |passenger|
+        PassengerMailer.with(name: passenger.name, email: passenger.email, flight: @flight).confirmation_email.deliver_later
+      end
+
       redirect_to @booking, notice: "Booking created"
     else
       render :new, status: :unprocessable_entity

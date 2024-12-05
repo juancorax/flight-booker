@@ -1,0 +1,10 @@
+Hello, <%= @name %>
+
+You have successfully booked your ticket!
+
+Here are your flight details:
+
+<%= "Departure Airport: #{@flight.departure_airport.code}" %>
+<%= "Arrival Airport: #{@flight.arrival_airport.code}" %>
+<%= "Start: #{@flight.start.strftime("%m/%d/%Y %I:%M %p")}" %>
+<%= "Duration: #{@flight.duration / 60} hrs" %>

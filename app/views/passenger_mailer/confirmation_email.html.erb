@@ -1,0 +1,10 @@
+<h1>Hello, <%= @name %></h1>
+
+<p>You have successfully booked your ticket!</p>
+
+<p>Here are your flight details:</p>
+
+<%= "Departure Airport: #{@flight.departure_airport.code}" %><br>
+<%= "Arrival Airport: #{@flight.arrival_airport.code}" %><br>
+<%= "Start: #{@flight.start.strftime("%m/%d/%Y %I:%M %p")}" %><br>
+<%= "Duration: #{@flight.duration / 60} hrs" %>
