@@ -1,10 +1,12 @@
+require 'faker'
+
 airport_codes = []
 
 10.times do
   code = ""
 
   loop do
-    code = ('A'..'Z').to_a.sample(3).join
+    code = Faker::Travel::Airport.iata(size: 'large', region: 'united_states')
 
     break unless airport_codes.include?(code)
   end
@@ -23,7 +25,7 @@ airport_ids = Airport.pluck(:id)
 
   arrival_airport_id = (airport_ids - [ departure_airport_id ]).sample
 
-  start = DateTime.current + rand(0..(1.year.to_i)).seconds
+  start = Faker::Time.forward()
 
   duration = rand(60..1200)
 
